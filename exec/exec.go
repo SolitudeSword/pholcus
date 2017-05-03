@@ -39,10 +39,17 @@ func init() {
 	gc.ManualGC()
 }
 
+/**
+ * DefaultRun
+ * 入口函数
+ * @param uiDefault string "web"、"gui"或"cmd"，指定本次运行的操作界面, 其中"gui"仅支持Windows系统
+ * @return void
+ * @package exec
+ */
 func DefaultRun(uiDefault string) {
 	fmt.Printf("%v\n\n", config.FULL_NAME)
 	flag.String("a *********************************************** common *********************************************** -a", "", "")
-	// 操作界面
+	// 操作界面 todo 这几个flag函数没明白想干什么
 	uiflag = flag.String("_ui", uiDefault, "   <选择操作界面> [web] [gui] [cmd]")
 	flagCommon()
 	web.Flag()
