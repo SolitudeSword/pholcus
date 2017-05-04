@@ -43,14 +43,38 @@ var (
 )
 
 // IniConfig implements Config to parse ini file.
+/**
+ * IniConfig
+ * ini配置文件解析器
+ * @package config
+ */
 type IniConfig struct {
 }
 
 // Parse creates a new Config and parses the file configuration from the named file.
+/**
+ * Parse
+ * -
+ * @receiver ini *IniConfig -
+ * @param name string -
+ * @return Configer -
+ * @return error -
+ * @see parseFile 实际调用的函数
+ * @package config
+ */
 func (ini *IniConfig) Parse(name string) (Configer, error) {
 	return ini.parseFile(name)
 }
 
+/**
+ * parseFile
+ * 解析ini文件配置
+ * @receiver ini *IniConfig 解析器对象
+ * @param name string ini配置文件名
+ * @return Configer 解析后的内容容器，失败为nil
+ * @return error 如果出现错误
+ * @package config
+ */
 func (ini *IniConfig) parseFile(name string) (*IniConfigContainer, error) {
 	file, err := os.Open(name)
 	if err != nil {
@@ -106,7 +130,7 @@ func (ini *IniConfig) parseFile(name string) (*IniConfigContainer, error) {
 		}
 
 		if bytes.HasPrefix(line, sectionStart) && bytes.HasSuffix(line, sectionEnd) {
-			section = strings.ToLower(string(line[1 : len(line)-1])) // section name case insensitive
+			section = strings.ToLower(string(line[1: len(line)-1])) // section name case insensitive
 			if comment.Len() > 0 {
 				cfg.sectionComment[section] = comment.String()
 				comment.Reset()
@@ -186,7 +210,13 @@ func (ini *IniConfig) ParseData(data []byte) (Configer, error) {
 
 // IniConfigContainer A Config represents the ini configuration.
 // When set and get value, support key as section:name type.
+/**
+ * IniConfigContainer
+ * ini配置文件解析后的存储容器
+ * @package config
+ */
 type IniConfigContainer struct {
+	// 文件名
 	filename       string
 	data           map[string]map[string]string // section=> key:val
 	sectionComment map[string]string            // section : comment

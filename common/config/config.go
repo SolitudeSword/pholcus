@@ -67,6 +67,7 @@ type Configer interface {
 }
 
 // Config is the adapter interface for parsing config file to get raw data to Configer.
+// 接口Config是用来适配配置文件解析
 type Config interface {
 	Parse(key string) (Configer, error)
 	ParseData(data []byte) (Configer, error)
@@ -77,6 +78,15 @@ var adapters = make(map[string]Config)
 // Register makes a config adapter available by the adapter name.
 // If Register is called twice with the same name or if driver is nil,
 // it panics.
+/**
+ * Register
+ * 注册配置文件解析器
+ * @param name string 解析器名字
+ * @param adapter Config 解析器
+ * @return void
+ * @panic 如果重复调用或者解析器为nil触发
+ * @package config
+ */
 func Register(name string, adapter Config) {
 	if adapter == nil {
 		panic("config: Register adapter is nil")
