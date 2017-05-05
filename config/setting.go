@@ -48,6 +48,7 @@ const (
 )
 
 var setting = func() config.Configer {
+	// 创建history目录、cache目录和js文件临时目录
 	os.MkdirAll(filepath.Clean(HISTORY_DIR), 0777)
 	os.MkdirAll(filepath.Clean(CACHE_DIR), 0777)
 	os.MkdirAll(filepath.Clean(PHANTOMJS_TEMP), 0777)

@@ -54,11 +54,11 @@ type IniConfig struct {
 // Parse creates a new Config and parses the file configuration from the named file.
 /**
  * Parse
- * -
- * @receiver ini *IniConfig -
- * @param name string -
- * @return Configer -
- * @return error -
+ * 解析器的标准接口函数
+ * @receiver ini *IniConfig 解析器对象
+ * @param name string 配置文件名
+ * @return Configer 解析后的内容容器，失败为nil
+ * @return error 如果出现错误
  * @see parseFile 实际调用的函数
  * @package config
  */
@@ -107,10 +107,11 @@ func (ini *IniConfig) parseFile(name string) (*IniConfigContainer, error) {
 		if err == io.EOF {
 			break
 		}
+		// 先去除空格，避免有一个只有空格的空行
+		line = bytes.TrimSpace(line)
 		if bytes.Equal(line, bEmpty) {
 			continue
 		}
-		line = bytes.TrimSpace(line)
 
 		var bComment []byte
 		switch {
@@ -218,8 +219,11 @@ func (ini *IniConfig) ParseData(data []byte) (Configer, error) {
 type IniConfigContainer struct {
 	// 文件名
 	filename       string
+	// 一级键是节名，二级键是键名，值是键值
 	data           map[string]map[string]string // section=> key:val
+	// 节名的注释内容
 	sectionComment map[string]string            // section : comment
+	// 键名的注释内容，key是节名.键名
 	keyComment     map[string]string            // id: []{comment, key...}; id 1 is for main comment.
 	sync.RWMutex
 }

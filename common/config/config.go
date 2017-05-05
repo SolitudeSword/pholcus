@@ -69,6 +69,14 @@ type Configer interface {
 // Config is the adapter interface for parsing config file to get raw data to Configer.
 // 接口Config是用来适配配置文件解析
 type Config interface {
+	/**
+	 * Parse
+	 * 解析器的标准接口函数
+	 * @param name string 配置文件名
+	 * @return Configer 解析后的内容容器，失败为nil
+	 * @return error 如果出现错误
+	 * @package config
+	 */
 	Parse(key string) (Configer, error)
 	ParseData(data []byte) (Configer, error)
 }
@@ -99,6 +107,15 @@ func Register(name string, adapter Config) {
 
 // NewConfig adapterName is ini/json/xml/yaml.
 // filename is the config file path.
+/**
+ * NewConfig
+ * 使用指定类型的适配器读取配置文件
+ * @param adapterName string 适配器名，要用Register注册过
+ * @param filename string 文件名
+ * @return Configer 解析后存储的容器
+ * @return error 发生错误时返回
+ * @see Register
+ */
 func NewConfig(adapterName, filename string) (Configer, error) {
 	adapter, ok := adapters[adapterName]
 	if !ok {
