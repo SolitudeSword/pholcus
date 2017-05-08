@@ -74,6 +74,13 @@ func init() {
 	}
 }
 
+/**
+ * logLevel
+ * 从配置文件中日志的字符串转换为日志级别数字
+ * @param l string 配置文件中的字符串
+ * @return int 对应的数字，如果非法返回-10
+ * @package config
+ */
 func logLevel(l string) int {
 	switch strings.ToLower(l) {
 	case "app":

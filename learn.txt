@@ -1,6 +1,6 @@
 这个是学习理解的笔记
 
 记录堆栈
-config/setting.go#57
+config/setting.go#190
 exec/exec.go
 

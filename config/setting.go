@@ -109,14 +109,17 @@ func defaultConfig(iniconf config.Configer) {
 	iniconf.Set("run::failure", fmt.Sprint(failure))
 }
 
+/**
+ * trySet
+ * 检测所有设置，未配置项或非法均设定为默认值
+ * @param iniconf config.Configer 配置存储容器
+ * @return void
+ * @package config
+ */
 func trySet(iniconf config.Configer) {
 	if v, e := iniconf.Int("crawlcap"); v <= 0 || e != nil {
 		iniconf.Set("crawlcap", strconv.Itoa(crawlcap))
 	}
-
-	// if v, e := iniconf.Int("datachancap"); v <= 0 || e != nil {
-	// 	iniconf.Set("datachancap", strconv.Itoa(datachancap))
-	// }
 
 	if v, e := iniconf.Int64("log::cap"); v <= 0 || e != nil {
 		iniconf.Set("log::cap", strconv.FormatInt(logcap, 10))
@@ -247,6 +250,14 @@ func trySet(iniconf config.Configer) {
 	iniconf.SaveConfigFile(CONFIG)
 }
 
+/**
+ * logLevel2
+ * 判断两个配置文件中的日志字符串级别，返回较小的那个
+ * @param l string 级别1
+ * @param g string 级别2
+ * @return string 代表较小的那个
+ * @package config
+ */
 func logLevel2(l string, g string) string {
 	a, b := logLevel(l), logLevel(g)
 	if a < b {

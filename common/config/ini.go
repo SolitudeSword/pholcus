@@ -265,6 +265,15 @@ func (c *IniConfigContainer) SectionKeys(section string) []string {
 }
 
 // Bool returns the boolean value for a given key.
+/**
+ * Bool
+ * 将配置中的值解析为bool
+ * @receiver IniConfigContainer ini配置内容容器
+ * @param key string 要取的值, 用 :: 分隔节和键
+ * @return bool 相应的值
+ * @return error 出错时存在
+ * @package config
+ */
 func (c *IniConfigContainer) Bool(key string) (bool, error) {
 	return ParseBool(c.getdata(key))
 }
@@ -525,6 +534,14 @@ func (c *IniConfigContainer) DIY(key string) (v interface{}, err error) {
 }
 
 // section.key or key
+/**
+ * getdata
+ * 取出相应的值，不存在返回空字符串
+ * @receiver IniConfigContainer ini配置内容容器
+ * @param key string 要取的值, 用 :: 分隔节和键
+ * @return string 相应的值
+ * @package config
+ */
 func (c *IniConfigContainer) getdata(key string) string {
 	if len(key) == 0 {
 		return ""

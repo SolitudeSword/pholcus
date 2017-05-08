@@ -139,6 +139,14 @@ func NewConfigData(adapterName string, data []byte) (Configer, error) {
 // It accepts 1, 1.0, t, T, TRUE, true, True, YES, yes, Yes,Y, y, ON, on, On,
 // 0, 0.0, f, F, FALSE, false, False, NO, no, No, N,n, OFF, off, Off.
 // Any other value returns an error.
+/**
+ * ParseBool
+ * 将一个值解析为bool
+ * @param val interface{} 要解析的值
+ * @return bool 解析后的值
+ * @return error 成功为nil
+ * @package config
+ */
 func ParseBool(val interface{}) (value bool, err error) {
 	if val != nil {
 		switch v := val.(type) {
